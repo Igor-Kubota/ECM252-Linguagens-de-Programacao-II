@@ -1,8 +1,8 @@
-//API = 7b1066fbeec8a963724fbff8697b9e7e
+//API = PEGAR API NO SITE OPENWEATHERMAP TOKEN
 const axios = require("axios")
 
 
-const appid = '7b1066fbeec8a963724fbff8697b9e7e'
+const appid = ' '
 const q = 'Itu'
 const units = "metric"
 const lang = "pt_BR"
