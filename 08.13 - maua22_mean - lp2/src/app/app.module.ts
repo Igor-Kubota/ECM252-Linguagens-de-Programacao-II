@@ -15,6 +15,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { ClienteService } from './clientes/cliente.service';
 import { HttpClientModule } from '@angular/common/http';
 
+import { AppRoutingModule } from './app-routing.module';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +26,10 @@ import { HttpClientModule } from '@angular/common/http';
     ClienteListaComponent
   ],
   imports: [
+    
     BrowserModule,
+    AppRoutingModule,
+
     FormsModule,
     BrowserAnimationsModule,
     MatInputModule,
