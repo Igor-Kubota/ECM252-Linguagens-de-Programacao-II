@@ -9,6 +9,9 @@ const App = () => {
         borderRadius: 8
     };
     const textoDoRotulo = "Nome:";
+    const obterTextoDoBotao = () => {
+        return "Enviar";
+        }
     return (
         <div style={{
             margin: 'auto', width: 768, backgroundColor: '#EEE', padding:
@@ -23,7 +26,7 @@ const App = () => {
                 borderStyle: 'hidden', width: '100%', borderRadius: 8, outline: 'none', boxSizing:
                     'border-box'
             }} />
-            <button style={estilosBotao}>Enviar</button>
+            <button style={estilosBotao}>{obterTextoDoBotao()}</button>
         </div>
     )
 }
