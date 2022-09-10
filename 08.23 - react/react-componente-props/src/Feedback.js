@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Feedback = props => {
     return (
@@ -7,15 +7,16 @@ const Feedback = props => {
                 type="button"
                 onClick={props.funcaoOK}
                 className="btn btn-primary">
-                {props.textoOK}
+                    {props.textoOK}
             </button>
             <button
                 type="button"
                 onClick={props.funcaoNOK}
                 className="btn btn-danger">
-                {props.textoNOK}
+                    {props.textoNOK}
             </button>
         </div>
     )
 }
+
 export default Feedback;
