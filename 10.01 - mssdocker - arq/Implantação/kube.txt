@@ -1,0 +1,115 @@
+kubectl create deployment meu-primeiro-deployment --image=gcr.io/google-samples/kubernetes-bootcamp:v1
+
+
+kubectl get pods -o go-template="{{range .items}}{{.metadata.name}}{{end}}"
+
+set POD_NAME=nome_do_pod_deployado
+
+echo %POD_NAME%
+
+kubectl proxy
+
+curl http://localhost:8001/api/v1/namespaces/default/pods/%POD_NAME%
+
+kubectl logs %POD_NAME%
+
+kubectl exec %POD_NAME% -- ls -l
+
+kubectl exec %POD_NAME% -- env
+
+kubectl exec %POD_NAME% -- date
+
+kubectl exec %POD_NAME% -- bash
+
+kubectl get services
+
+kubectl expose deployment/meu-primeiro-deployment --type="NodePort" --port 8080
+
+kubectl get services/meu-primeiro-deployment -o go-template="{{(index .spec.ports 0).nodePort}}"
+
+set NODE_PORT=numero_retornado_pelo_comando_anterior
+
+ipconfig
+
+curl ip_da_sua_maquina:%NODE_PORT%
+
+kubectl describe deployment
+
+kubectl label pod %POD_NAME% versao=v1
+
+kubectl describe pods %POD_NAME%
+
+kubectl get pods -l versao=v1
+
+kubectl delete service -l app=meu-primeiro-deployment
+
+kubectl get rs
+
+kubectl scale deployments/meu-primeiro-deployment --replicas=4
+
+kubectl set image deployments/meu-primeiro-deployment kubernetes-bootcamp=jocatalin/kubernetes-bootcamp:v2
+
+kubectl rollout undo deployments/meu-primeiro-deployment
+
+
+clonar https://github.com/asbonato/memos22mss
+
+Dockerfile do lembretes
+
+#alpine: imagem Linux pequena
+FROM node:alpine
+
+#um diretório no sistema de arquivos do contêiner para os
+#comandos a seguir
+WORKDIR /app
+
+#copia o arquivo package.json para poder executar o install
+COPY package.json .
+
+#instala as dependências
+RUN npm install
+
+#copia todo o conteúdo local para a imagem
+COPY . .
+
+#executa quando o contêiner entrar em execução
+CMD ["npm", "start"]
+
+docker build -t asbonato/lembretes:0.0.1 .
+
+
+//lembretes.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+    name: lembretes
+spec:
+    containers:
+        - name: lembretes
+          image: asbonato/lembretes:0.0.1
+          resources:
+              limits:
+                  memory: 256Mi
+                  cpu: 1
+
+//para fazer o deployment
+
+kubectl apply -f lembretes.yaml             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
