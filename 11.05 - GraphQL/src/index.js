@@ -2,41 +2,31 @@ import { createServer } from   '@graphql-yoga/node'
 
 const typeDefs = `
     type Query {
-        hello: String!
-        name: String!
+        effectiveJava: Livro!
+ },
+    type Livro{
         id: ID!
-        location: String!
-        age: Int!
-        ofAge: Boolean!
-        salary: Float
- }
+        titulo: String!
+        genero: String!
+        edicao: Int
+        preco: Float
+    }
 `;
 
 const resolvers = {
-    Query:{
-        id(){
-            return "umachave";
-        },
-        location(){
-            return "SP";
-        },
-        age(){
-            return 29;
-        },
-        ofAge(){
-            return true;
-        },
-        salary(){
-            return null;
-        },
-        hello() {
-            return "Minha primeira API GraphQL";
-        },
-        name(){
-            return "um nome aqui";
-        },
-    },
+    Query: {
+        effectiveJava() {
+            return {
+                id: '123456',
+                titulo: 'Effective Java',
+                genero: 'Técnico',
+                edicao: 3,
+                preco: 43.9
+            }
+        }
+    }
 };
+   
 
 const server = createServer({
     schema: {
