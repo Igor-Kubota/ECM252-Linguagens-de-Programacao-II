@@ -1,13 +1,71 @@
-import { createServer } from   '@graphql-yoga/node'
+import { createServer } from '@graphql-yoga/node'
+
+const usuarios = [{
+    id: '100',
+    nome: 'Jose',
+    livros: [{
+        id: '1',
+        titulo: 'Effective Java',
+        genero: "Técnico",
+        edicao: 3,
+        preco: 39.99
+    },
+    {
+        id: '2',
+        titulo: "Concrete Mathematics",
+        genero: "Técnico",
+        edicao: 1,
+        preco: 89.99
+    }
+    ]
+}, {
+    id: '101',
+    nome: 'Maria',
+    livros: [{
+        id: '5',
+        titulo: 'Programming Challenges',
+        genero: "Técnico",
+        edicao: 1,
+        preco: 39.99
+    }]
+}]
+
+
+const livros = [
+    {
+        id: '1',
+        titulo: 'Effective Java',
+        genero: "Tecnico",
+        edicao: 3,
+        preco: 39.99
+    },
+    {
+        id: '2',
+        titulo: 'Concrete Mathematics',
+        genero: "Tecnico",
+        edicao: 1,
+        preco: 89.99
+    }
+]
 
 const typeDefs = `
+    type Usuario{
+        id :ID!,
+        nome: String!,
+        idade: Int!,
+        livros: [Livro!]!
+    },
+
     type Query {
+        usuarios: [Usuario!]!
+        livros(precoMaximo: Float!): [Livro!]!
         adicionar (numeros: [Float!]!): Float!
         notas: [Int!]!
         bemVindo(nome:String): String!
         effectiveJava: Livro!
         
- },
+    },
+
     type Livro{
         id: ID!
         titulo: String!
@@ -19,18 +77,31 @@ const typeDefs = `
 
 const resolvers = {
     Query: {
-        adicionar(parent,args,ctx,info){
-            return args.numeros.length===0 ? 0 : 
-            args.numeros.reduce((ac,atual)=>{
-                return ac + atual;
-            })
+        usuarios(){
+            return usuarios;
         },
-        notas(parent,args,ctx,info){
-            return[10,2,7,7,8]
+
+        livros(parent, args, ctx, info) {
+            return livros.filter((l) => {
+                return l.preco <= args.precoMaximo
+            });
         },
-        bemVindo(parent,args,ctx,info){
+
+        adicionar(parent, args, ctx, info) {
+            return args.numeros.length === 0 ? 0 :
+                args.numeros.reduce((ac, atual) => {
+                    return ac + atual;
+                })
+        },
+
+        notas(parent, args, ctx, info) {
+            return [10, 2, 7, 7, 8]
+        },
+
+        bemVindo(parent, args, ctx, info) {
             return `Bem Vindo ${args.nome ? args.nome : 'visitante'}`;
         },
+
         effectiveJava() {
             return {
                 id: '123456',
@@ -40,9 +111,10 @@ const resolvers = {
                 preco: 43.9
             }
         }
+
     }
 };
-   
+
 
 const server = createServer({
     schema: {
@@ -51,6 +123,6 @@ const server = createServer({
     }
 })
 
-server.start(()=>{
+server.start(() => {
     'Servidor no ar...'
 })
